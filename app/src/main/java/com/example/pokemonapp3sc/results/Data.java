@@ -1,5 +1,6 @@
 package com.example.pokemonapp3sc.results;
 
+import com.example.pokemonapp3sc.entities.Pokemon;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -44,32 +45,6 @@ public class Data {
 
     public void setNext(String next) {
         this.next = next;
-    }
-
-
-    public class Pokemon {
-
-        @SerializedName("url")
-        private String url;
-        @SerializedName("name")
-        private String name;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
     }
 
 }
