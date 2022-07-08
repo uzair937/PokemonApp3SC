@@ -1,20 +1,30 @@
 package com.example.pokemonapp3sc.ui.search;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.pokemonapp3sc.MainActivity;
+import com.example.pokemonapp3sc.R;
 import com.example.pokemonapp3sc.databinding.FragmentSearchBinding;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
+    private EditText searchText;
+    private TextView testSearch;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -26,7 +36,53 @@ public class SearchFragment extends Fragment {
 
         final TextView textView = binding.textSearch;
         searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        testSearch = binding.testSearch;
+        searchText = binding.searchText;
+
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        searchText.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    private Timer timer = new Timer();
+                    private final long DELAY = 500; // milliseconds
+
+                    @Override
+                    public void afterTextChanged(final Editable s) {
+                        timer.cancel();
+                        timer = new Timer();
+                        timer.schedule(
+                                new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (MainActivity.PokemonList.contains(s.toString())) {
+                                                    testSearch.setText("true");
+                                                } else {
+                                                    testSearch.setText("false");
+                                                }
+                                            }
+                                        });
+                                    }
+                                },
+                                DELAY
+                        );
+                    }
+                }
+        );
     }
 
     @Override
