@@ -43,8 +43,8 @@ public class RandomiserFragment extends Fragment {
     }
 
     private void getRandomPokemon() {
-        int random = new Random().nextInt(1 + 19) + 1;
-        pokemonNameText.setText(MainActivity.PokemonList.get(random));
+        int random = new Random().nextInt(0 + MainActivity.pokemonList.size());
+        pokemonNameText.setText(MainActivity.pokemonList.get(random).getName());
     }
 
     @Override

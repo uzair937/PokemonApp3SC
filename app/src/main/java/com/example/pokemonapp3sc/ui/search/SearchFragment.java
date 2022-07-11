@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pokemonapp3sc.MainActivity;
-import com.example.pokemonapp3sc.R;
 import com.example.pokemonapp3sc.databinding.FragmentSearchBinding;
 
 import java.util.Timer;
@@ -69,7 +68,7 @@ public class SearchFragment extends Fragment {
                                         getActivity().runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                if (MainActivity.PokemonList.contains(s.toString())) {
+                                                if (MainActivity.pokemonList.contains(s.toString())) {
                                                     testSearch.setText("true");
                                                 } else {
                                                     testSearch.setText("false");

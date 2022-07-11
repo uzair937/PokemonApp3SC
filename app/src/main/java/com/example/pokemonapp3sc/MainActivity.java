@@ -1,7 +1,6 @@
 package com.example.pokemonapp3sc;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +10,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.pokemonapp3sc.databinding.ActivityMainBinding;
-import com.example.pokemonapp3sc.results.Data;
-import com.example.pokemonapp3sc.retrofit.RetrofitClient;
+import com.example.pokemonapp3sc.entities.Pokemon;
+import com.example.pokemonapp3sc.results.PokemonData;
+import com.example.pokemonapp3sc.retrofit.PokemonClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -23,13 +23,12 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-    public static ArrayList<String> PokemonList;
+    public static ArrayList<Pokemon> pokemonList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.pokemonapp3sc.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -46,24 +45,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populatePokemon() {
-        PokemonList = new ArrayList<>();
-        Call<Data> call = RetrofitClient.getInstance().getMyApi().getPokemon();
-        System.out.print(call);
-        call.enqueue(new Callback<Data>() {
+        pokemonList = new ArrayList<>();
+        Call<PokemonData> call = PokemonClient.getInstance().getMyApi().getPokemon();
+        call.enqueue(new Callback<PokemonData>() {
             @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
-                Data data = response.body();
-                String[] pokemonNames = new String[data.getResults().size()];
-                for (int i = 0; i < data.getResults().size(); i++) {
-                    pokemonNames[i] = data.getResults().get(i).getName();
-                    PokemonList.add(pokemonNames[i]);
+            public void onResponse(Call<PokemonData> call, Response<PokemonData> response) {
+                PokemonData data = response.body();
+                for (int i = 0; i < (data != null ? data.getResults().size() : 0); i++) {
+                    Pokemon pokemon = new Pokemon();
+                    pokemon.setName(data.getResults().get(i).getName());
+                    pokemon.setUrl(data.getResults().get(i).getUrl());
+                    //pokemon.setSprite(data.getResults().get(i).getSprite());
+                    pokemonList.add(pokemon);
                 }
-                //pokemonNameText.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, oneHeroes));
             }
 
             @Override
-            public void onFailure(Call<Data> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<PokemonData> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "An error has occurred", Toast.LENGTH_LONG).show();
             }
         });
     }
