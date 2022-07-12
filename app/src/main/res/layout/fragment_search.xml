@@ -24,7 +24,7 @@
         android:layout_marginTop="120dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="Search by Name"
         android:textAlignment="center"
         tools:layout_editor_absoluteX="107dp"
         tools:layout_editor_absoluteY="88dp" />
@@ -35,6 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="240dp"
-        android:text="TextView" />
+        android:text="Search Result" />
 
 </RelativeLayout>

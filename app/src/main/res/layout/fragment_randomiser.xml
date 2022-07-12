@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="160dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:text="Name"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -43,7 +43,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:text="Ability"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 </RelativeLayout>

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.pokemonapp3sc.R;
 
-public class TextViewAdapter extends BaseAdapter {
+public class TextViewAdapter extends BaseAdapter { //sets text dynamically based on pokemon list
     private Context context;
     private final String[] textViewValues;
 

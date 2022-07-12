@@ -35,7 +35,7 @@ public class SearchFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textSearch;
-        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText); //checks what the textview contains
+        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         searchResult = binding.searchResult;
         searchText = binding.searchText;
 
@@ -45,7 +45,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        searchText.addTextChangedListener(
+        searchText.addTextChangedListener( //checks what the textview contains
                 new TextWatcher() { //AJAX type live search
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {

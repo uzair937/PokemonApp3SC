@@ -13,12 +13,12 @@ public class PokemonClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         pokemonApi = retrofit.create(PokemonAPI.class);
-
+        //gets JSON data from the API
     }
 
     public static synchronized PokemonClient getInstance() {
         if (instance == null) {
-            instance = new PokemonClient();
+            instance = new PokemonClient(); //instance of this class
         }
         return instance;
     }
@@ -26,5 +26,5 @@ public class PokemonClient {
 
     public PokemonAPI getMyApi() {
         return pokemonApi;
-    }
+    } //returns api
 }

@@ -36,8 +36,9 @@
         android:layout_width="414dp"
         android:layout_height="86dp"
         app:srcCompat="@drawable/pokemon_logo_png_1428"
-        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
         tools:layout_editor_absoluteX="-3dp"
-        tools:layout_editor_absoluteY="532dp" />
+        tools:layout_editor_absoluteY="532dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

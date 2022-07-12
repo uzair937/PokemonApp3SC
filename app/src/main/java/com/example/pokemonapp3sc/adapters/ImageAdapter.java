@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class ImageAdapter extends BaseAdapter {
+public class ImageAdapter extends BaseAdapter { //sets images dynamically based on id
     private List<Integer> thumbnailIds;
     private Context context;
 
