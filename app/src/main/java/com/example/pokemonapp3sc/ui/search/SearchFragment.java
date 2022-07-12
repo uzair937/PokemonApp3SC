@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pokemonapp3sc.MainActivity;
 import com.example.pokemonapp3sc.databinding.FragmentSearchBinding;
+import com.example.pokemonapp3sc.entities.Pokemon;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +24,7 @@ public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
     private EditText searchText;
-    private TextView testSearch;
+    private TextView searchResult;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,8 +35,8 @@ public class SearchFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textSearch;
-        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        testSearch = binding.testSearch;
+        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText); //checks what the textview contains
+        searchResult = binding.searchResult;
         searchText = binding.searchText;
 
         return root;
@@ -45,7 +46,7 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         super.onResume();
         searchText.addTextChangedListener(
-                new TextWatcher() {
+                new TextWatcher() { //AJAX type live search
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                     }
@@ -54,7 +55,7 @@ public class SearchFragment extends Fragment {
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }
 
-                    private Timer timer = new Timer();
+                    private Timer timer = new Timer(); //does the search every 500 ms
                     private final long DELAY = 500; // milliseconds
 
                     @Override
@@ -65,14 +66,11 @@ public class SearchFragment extends Fragment {
                                 new TimerTask() {
                                     @Override
                                     public void run() {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (MainActivity.pokemonList.contains(s.toString())) {
-                                                    testSearch.setText("true");
-                                                } else {
-                                                    testSearch.setText("false");
-                                                }
+                                        getActivity().runOnUiThread(() -> {
+                                            if (Pokemon.pokemonList.contains(s.toString())) {
+                                                searchResult.setText("true"); //if the pokemon is in the list it'll show as true
+                                            } else {
+                                                searchResult.setText("false");
                                             }
                                         });
                                     }

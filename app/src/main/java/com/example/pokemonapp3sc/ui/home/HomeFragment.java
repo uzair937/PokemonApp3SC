@@ -15,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.pokemonapp3sc.MainActivity;
 import com.example.pokemonapp3sc.R;
 import com.example.pokemonapp3sc.adapters.ImageAdapter;
+import com.example.pokemonapp3sc.adapters.TextViewAdapter;
 import com.example.pokemonapp3sc.databinding.FragmentHomeBinding;
+import com.example.pokemonapp3sc.entities.Pokemon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,36 +41,43 @@ public class HomeFragment extends Fragment {
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        ArrayList<Integer> icons = new ArrayList< >(Arrays.asList(
-                R.drawable.pokemon_logo_png_1428
-        ));
+//        ArrayList<Integer> icons = new ArrayList< >(Arrays.asList(
+//                R.drawable.pokemon_logo_png_1428
+//        ));
+
         pokemonGrid = binding.gridView;
-        pokemonGrid.setAdapter(new ImageAdapter(icons, getActivity().getApplicationContext()));
+        String[] textValues = new String[Pokemon.pokemonList.size()];
+        for (int i = 0; i < Pokemon.pokemonList.size(); i++) {
+            textValues[i] = Pokemon.pokemonList.get(i).getName();
+        }
+        //pokemonGrid.setAdapter(new ImageAdapter(icons, getActivity().getApplicationContext()));
+        pokemonGrid.setAdapter(new TextViewAdapter(getContext(), textValues));
         pokemonGrid.setOnItemClickListener((parent, view, position, id) -> {
-            int pos = icons.get(position);
-            showDialogBox(pos);
+            //int pos = icons.get(position);
+
+            showDialogBox(position);
         });
         return root;
     }
 
-    private void showDialogBox(final int item_pos){
+    private void showDialogBox(final int position){
         final Dialog dialog = new Dialog(getContext());
 
         dialog.setContentView(R.layout.grid_dialog);
 
         //Getting custom dialog views
-        TextView Image_name = dialog.findViewById(R.id.txt_Image_name);
-        ImageView Image = dialog.findViewById(R.id.img);
+        TextView pokemonName = dialog.findViewById(R.id.txt_name);
+        //ImageView Image = dialog.findViewById(R.id.img);
         Button btn_Close = dialog.findViewById(R.id.btn_close);
 
-        String title = getResources().getResourceName(item_pos);
+        String title = Pokemon.pokemonList.get(position).getName();
 
         //extracting name
         int index = title.indexOf("/");
         String name = title.substring(index+1);
-        Image_name.setText(name);
+        pokemonName.setText(name);
 
-        Image.setImageResource(item_pos);
+        //Image.setImageResource(item_pos);
 
         btn_Close.setOnClickListener(v -> dialog.dismiss());
 

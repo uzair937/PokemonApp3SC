@@ -7,12 +7,13 @@ public class PokemonClient {
     private static PokemonClient instance = null;
     private PokemonAPI pokemonApi;
 
-    private PokemonClient() {
+    public PokemonClient() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PokemonAPI.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         pokemonApi = retrofit.create(PokemonAPI.class);
+
     }
 
     public static synchronized PokemonClient getInstance() {
@@ -21,6 +22,7 @@ public class PokemonClient {
         }
         return instance;
     }
+
 
     public PokemonAPI getMyApi() {
         return pokemonApi;
